@@ -13,12 +13,11 @@ interface NavigationItemProps {
 export const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
   const params = useParams();
   const router = useRouter();
-  console.log("id is ", id, "image url is", imageUrl, "name is ", name);
   return (
     <ActionTooltip side="right" align="center" label={name}>
       <button
         onClick={() => {
-          router.push(`servers/${id}`);
+          router.replace(`/servers/${id}`);
         }}
         className="group relative flex items-center mt-6"
       >
