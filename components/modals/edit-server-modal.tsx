@@ -34,8 +34,6 @@ const formSchema = z.object({
 export const EditServerModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "editServer";
-  //@ts-ignore
-  const { server } = data;
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,14 +41,18 @@ export const EditServerModal = () => {
       imageUrl: "",
     },
   });
-
+  var server = null;
   useEffect(() => {
     if (server) {
       form.setValue("name", server.name);
       form.setValue("imageUrl", server.imageUrl);
     }
-  }, [server, form]);
+  }, [form]);
   const router = useRouter();
+  if (!isModalOpen) return null;
+  //@ts-ignore
+  server = data.server;
+
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {

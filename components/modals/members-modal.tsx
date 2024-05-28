@@ -46,11 +46,12 @@ export const MembersModal = () => {
     ADMIN: <ShieldAlert className="h-4 w-4 ml-2 text-rose-500" />,
   };
   const { onOpen, isOpen, onClose, type, data } = useModal();
+  const isModalOpen = isOpen && type === "members";
+  const [loadingId, setLoadingId] = useState("");
+  if (!isModalOpen) return null;
   const router = useRouter();
   //@ts-ignore
   const { server } = data;
-  const [loadingId, setLoadingId] = useState("");
-  const isModalOpen = isOpen && type === "members";
 
   const onKick = async (memberId: string) => {
     try {

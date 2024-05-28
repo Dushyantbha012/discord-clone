@@ -17,13 +17,16 @@ import axios from "axios";
 
 export const InviteModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
+  const isModalOpen = isOpen && type === "invite";
+  const [copied, setCopied] = useState(false);
   const origin = useOrigin();
+  const [isLoading, setIsLoading] = useState(false);
+  if (!isModalOpen) return null;
+
   //@ts-ignore
   const { server } = data;
-  const [copied, setCopied] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
   const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
-  const isModalOpen = isOpen && type === "invite";
 
   const onCopy = () => {
     navigator.clipboard.writeText(inviteUrl);

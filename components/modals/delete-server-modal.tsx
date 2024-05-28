@@ -16,11 +16,14 @@ import { useRouter } from "next/navigation";
 
 export const DeleteServerModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
+  const isModalOpen = isOpen && type === "deleteServer";
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  if (!isModalOpen) return null;
   //@ts-ignore
   const { server } = data;
-  const [isLoading, setIsLoading] = useState(false);
-  const isModalOpen = isOpen && type === "deleteServer";
-  const router = useRouter();
+
   const onDelete = async () => {
     try {
       setIsLoading(true);

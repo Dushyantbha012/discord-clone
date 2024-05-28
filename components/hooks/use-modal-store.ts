@@ -1,4 +1,4 @@
-import { Server } from "@prisma/client";
+import { ChannelType, Server } from "@prisma/client";
 import { create } from "zustand";
 
 export type ModalType =
@@ -16,7 +16,7 @@ interface ModalData {
 
 interface ModalStore {
   type: ModalType | null;
-  data: {};
+  data?: ModalData;
   isOpen: boolean;
   onOpen: (type: ModalType, data?: ModalData) => void;
   onClose: () => void;

@@ -16,11 +16,14 @@ import { useRouter } from "next/navigation";
 
 export const LeaveServerModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
+  const isModalOpen = isOpen && type === "leaveServer";
+  const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+  if (!isModalOpen) return null;
   //@ts-ignore
   const { server } = data;
-  const [isLoading, setIsLoading] = useState(false);
-  const isModalOpen = isOpen && type === "leaveServer";
-  const router = useRouter();
+
   const onClick = async () => {
     try {
       setIsLoading(true);
