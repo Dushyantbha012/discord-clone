@@ -21,7 +21,6 @@ export const DeleteChannelModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  if (!isModalOpen) return null;
   //@ts-ignore
   const { server, channel } = data;
 

@@ -48,7 +48,6 @@ export const MembersModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "members";
   const [loadingId, setLoadingId] = useState("");
-  if (!isModalOpen) return null;
   const router = useRouter();
   //@ts-ignore
   const { server } = data;

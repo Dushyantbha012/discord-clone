@@ -49,7 +49,7 @@ function ServerSection({
               onOpen("createChannel", { server, channelType });
             }}
           >
-            <Plus className="h-4 w-4"></Plus>
+            <Plus className="h-4 w-4" />
           </button>
         </ActionTooltip>
       )}

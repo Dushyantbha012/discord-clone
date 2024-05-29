@@ -41,7 +41,8 @@ export const EditServerModal = () => {
       imageUrl: "",
     },
   });
-  var server = null;
+  //@ts-ignore
+  const server = data.server;
   useEffect(() => {
     if (server) {
       form.setValue("name", server.name);
@@ -49,9 +50,6 @@ export const EditServerModal = () => {
     }
   }, [form]);
   const router = useRouter();
-  if (!isModalOpen) return null;
-  //@ts-ignore
-  server = data.server;
 
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {

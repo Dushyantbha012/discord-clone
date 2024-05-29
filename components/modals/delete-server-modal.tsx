@@ -20,7 +20,6 @@ export const DeleteServerModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  if (!isModalOpen) return null;
   //@ts-ignore
   const { server } = data;
 
