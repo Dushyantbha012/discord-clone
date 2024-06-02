@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Plus, Smile } from "lucide-react";
 import axios from "axios";
 import { useModal } from "../hooks/use-modal-store";
+import { useRouter } from "next/navigation";
 interface ChatInputprops {
   apiUrl: string;
   query: Record<string, any>;
@@ -26,13 +27,14 @@ function ChatInput({ apiUrl, query, name, type }: ChatInputprops) {
     resolver: zodResolver(formSchema),
   });
   const isLoading = form.formState.isSubmitting;
-
+  const router = useRouter();
   const onSubmit = async (value: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({ url: apiUrl, query });
       const res = await axios.post(url, value);
-      console.log(res);
-      form.setValue("content", "");
+
+      form.reset();
+      router.refresh();
     } catch (error) {
       console.log(error);
     }
