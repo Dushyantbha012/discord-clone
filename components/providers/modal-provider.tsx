@@ -11,6 +11,7 @@ import { DeleteServerModal } from "../modals/delete-server-modal";
 import { DeleteChannelModal } from "../modals/delete-channel-modal";
 import { EditChannelModal } from "../modals/edit-channel-modal";
 import { useModal } from "../hooks/use-modal-store";
+import { MessageFile } from "../modals/message-file-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -30,6 +31,7 @@ export const ModalProvider = () => {
         </>
       );
     }
+    console.log("here", MessageFile);
     return (
       <>
         <InviteModal />
@@ -44,6 +46,7 @@ export const ModalProvider = () => {
   return (
     <>
       <CreateServerModal />
+      <MessageFile />
     </>
   );
 };
