@@ -18,9 +18,10 @@ import {
   Users2,
 } from "lucide-react";
 import { useModal } from "../hooks/use-modal-store";
+import { ServerWithMembersWithProfiles } from "@/tyes";
 
 interface serverHeaderProps {
-  server: any;
+  server: ServerWithMembersWithProfiles;
   role?: MemberRole;
 }
 
