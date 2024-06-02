@@ -14,7 +14,7 @@ interface ChatInputprops {
   name: string;
   type: "conversation" | "channel";
 }
-
+import EmojiPicker from "@/components/emoji-picker";
 const formSchema = z.object({
   content: z.string().min(1),
 });
@@ -66,7 +66,11 @@ function ChatInput({ apiUrl, query, name, type }: ChatInputprops) {
                     {...field}
                   />
                   <div className="absolute top-7 right-8">
-                    <Smile />
+                    <EmojiPicker
+                      onChange={(emoji: string) => {
+                        field.onChange(`${field.value}${emoji}`);
+                      }}
+                    />
                   </div>
                 </div>
               </FormControl>
