@@ -28,7 +28,8 @@ function ChatInput({ apiUrl, query, name, type }: ChatInputprops) {
   const onSubmit = async (value: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({ url: apiUrl, query });
-      await axios.post(url, value);
+      const res = await axios.post(url, value);
+      console.log(res);
       form.setValue("content", "");
     } catch (error) {
       console.log(error);
