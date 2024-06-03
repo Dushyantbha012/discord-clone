@@ -9,6 +9,7 @@ import ChatItem from "./chat-item";
 import { format } from "date-fns";
 import { useChatScoket } from "../hooks/use-chat-scoket";
 import { ScrollArea } from "../ui/scroll-area";
+import { useChatScroll } from "../hooks/use-chat-scroll";
 interface ChatMessagesProps {
   name: string;
   member: Member;
@@ -47,6 +48,13 @@ function ChatMessages({
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useChatQuery({ queryKey, apiUrl, paramKey, paramValue });
   useChatScoket({ queryKey, addKey, updateKey });
+  useChatScroll({
+    chatRef,
+    bottomRef,
+    loadMore: fetchNextPage,
+    shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
+    count: data?.pages?.[0]?.items?.length,
+  });
 
   if (status === "error") {
     return (
