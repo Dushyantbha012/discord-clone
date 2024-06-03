@@ -43,11 +43,17 @@ export const ModalProvider = () => {
       </>
     );
   }
+  if (data?.apiUrl && data?.query) {
+    return (
+      <>
+        <DeleteMessageModal />;
+        <MessageFile />
+      </>
+    );
+  }
   return (
     <>
       <CreateServerModal />
-      <MessageFile />
-      <DeleteMessageModal />
     </>
   );
 };

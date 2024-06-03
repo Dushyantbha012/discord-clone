@@ -29,12 +29,14 @@ async function ChannelIdPage({ params }: ChannelIdPageProps) {
   }
   return (
     <div className="bg-white dark:bg-[#313338] flex flex-col h-screen">
-      <ChatHeader
-        name={channel.name}
-        serverId={channel.serverId}
-        type="channel"
-      />
-      <div className="flex-1">
+      <div className="fixed top-0 z-10 bg-white dark:bg-[#313338] w-full md:pr-[310px]">
+        <ChatHeader
+          name={channel.name}
+          serverId={channel.serverId}
+          type="channel"
+        />
+      </div>
+      <div className="flex-1 z-0 pb-[80px] pt-[80px]">
         <ChatMessages
           member={member}
           name={channel.name}
@@ -47,13 +49,14 @@ async function ChannelIdPage({ params }: ChannelIdPageProps) {
           paramValue={channel.id}
         />
       </div>
-
-      <ChatInput
-        name={channel.name}
-        type="channel"
-        apiUrl="/api/socket/messages"
-        query={{ channelId: channel.id, serverId: channel.serverId }}
-      />
+      <div className="fixed bottom-0 z-10 bg-white dark:bg-[#313338] w-full md:pr-[300px]">
+        <ChatInput
+          name={channel.name}
+          type="channel"
+          apiUrl="/api/socket/messages"
+          query={{ channelId: channel.id, serverId: channel.serverId }}
+        />
+      </div>
     </div>
   );
 }
