@@ -18,9 +18,12 @@ export const useChatQuery = ({
 }: ChatQueryProps) => {
   const { isConnected } = useSocket();
 
-  const fetchMessages = async ({ pageParam = undefined }) => {
+  const fetchMessages = async ({ initialPageParam = undefined }) => {
     const url = qs.stringifyUrl(
-      { url: apiUrl, query: { cursor: pageParam, [paramKey]: paramValue } },
+      {
+        url: apiUrl,
+        query: { cursor: initialPageParam, [paramKey]: paramValue },
+      },
       { skipNull: true }
     );
 

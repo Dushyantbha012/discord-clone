@@ -61,7 +61,7 @@ export default async function handler(
     if (!member) {
       return res.status(408).json({ error: "member not found" });
     }
-    const message = await db.message.findFirst({
+    var message = await db.message.findFirst({
       where: { id: messageId as string, channelId: channelId as string },
       include: {
         member: {
@@ -80,12 +80,12 @@ export default async function handler(
     const canDeleteMessage =
       !message?.deleted && (isAdmin || isModerator || isOwner);
     const canEditMessage = !message?.deleted && isOwner;
-    var Updatedmessage = null;
+
     if (req.method === "DELETE") {
       if (!canDeleteMessage) {
         return res.status(401).json({ error: "Unauthorised" });
       }
-      Updatedmessage = await db.message.update({
+      message = await db.message.update({
         where: { id: messageId as string },
         data: {
           fileUrl: null,
@@ -107,7 +107,7 @@ export default async function handler(
       if (!content) {
         return res.status(402).json({ error: "content missing" });
       }
-      Updatedmessage = await db.message.update({
+      message = await db.message.update({
         where: { id: messageId as string },
         data: {
           content: content,
@@ -122,7 +122,7 @@ export default async function handler(
     const updateKey = `chat:${channelId}:messages:update`;
 
     res?.socket?.server?.io?.emit(updateKey, message);
-    return res.status(200).json({ message: Updatedmessage });
+    return res.status(200).json({ message: message });
   } catch (error) {
     console.log("[MESSAGE_ID]", error);
     return res.status(500).json({ error: "Internal Error" });

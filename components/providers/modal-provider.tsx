@@ -32,7 +32,6 @@ export const ModalProvider = () => {
         </>
       );
     }
-    console.log("here", MessageFile);
     return (
       <>
         <InviteModal />

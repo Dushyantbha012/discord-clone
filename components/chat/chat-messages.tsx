@@ -7,6 +7,7 @@ import { Loader2, ServerCrash } from "lucide-react";
 import { Fragment } from "react";
 import ChatItem from "./chat-item";
 import { format } from "date-fns";
+import { useChatScoket } from "../hooks/use-chat-scoket";
 interface ChatMessagesProps {
   name: string;
   member: Member;
@@ -36,9 +37,13 @@ function ChatMessages({
   paramValue,
   type,
 }: ChatMessagesProps) {
+  const updateKey = `chat:${chatId}:messages:update`;
+  const addKey = `chat:${chatId}:messages`;
+
   const queryKey = `chats:${chatId}`;
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useChatQuery({ queryKey, apiUrl, paramKey, paramValue });
+  useChatScoket({ queryKey, addKey, updateKey });
 
   if (status === "error") {
     return (
