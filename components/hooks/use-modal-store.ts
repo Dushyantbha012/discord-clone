@@ -11,7 +11,8 @@ export type ModalType =
   | "deleteServer"
   | "deleteChannel"
   | "editChannel"
-  | "messageFile";
+  | "messageFile"
+  | "deleteMessage";
 
 interface ModalData {
   server?: Server;
@@ -33,10 +34,6 @@ export const useModal = create<ModalStore>((set) => ({
   data: {},
   isOpen: false,
   onOpen: (type: ModalType, data?: ModalData) => {
-    console.log("in on open, ", type);
-    if (data) {
-      console.log(data);
-    }
     set({ isOpen: true, type, data });
   },
   onClose: () => set({ type: null, isOpen: false }),

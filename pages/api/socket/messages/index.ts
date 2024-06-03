@@ -7,18 +7,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponseServerIo
 ) {
-  const { content, fileUrl } = req.body;
-  const { serverId, channelId } = req.query;
-
   if (req.method !== "POST") {
     return res.status(405).json({ error: "method not allowed" });
   }
   try {
+    const { content, fileUrl } = req.body;
+    const { serverId, channelId } = req.query;
     const profile = await currentProfileSocket(req);
-    console.log("profile recieved is ,", profile);
 
     if (!profile) {
-      console.log("profile missing");
       return res.status(402).json({ error: "Unauthorised" });
     }
     if (!serverId) {
