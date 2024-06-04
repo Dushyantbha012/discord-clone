@@ -80,7 +80,7 @@ export const ProfileModal = ({ userId }: { userId: string }) => {
             <>
               <DialogHeader className="pt-8 px-6">
                 <DialogTitle className="text-2xl text-center font-bold">
-                  Customize your Profile
+                  Complete your Profile
                 </DialogTitle>
               </DialogHeader>
               <Form {...form}>
@@ -115,13 +115,13 @@ export const ProfileModal = ({ userId }: { userId: string }) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                            Name
+                            Full Name
                           </FormLabel>
                           <FormControl>
                             <Input
                               disabled={isLoading}
                               className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                              placeholder="Enter Name"
+                              placeholder="Enter Full Name"
                               {...field}
                             />
                           </FormControl>
@@ -132,7 +132,7 @@ export const ProfileModal = ({ userId }: { userId: string }) => {
                   </div>
                   <DialogFooter className="bg-gray-100 px-6 py-4">
                     <Button disabled={isLoading} variant="primary">
-                      Create
+                      Done
                     </Button>
                   </DialogFooter>
                 </form>
