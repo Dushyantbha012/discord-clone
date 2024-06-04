@@ -2,9 +2,14 @@ import { initialProfile } from "@/lib/initial-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { InitialModal } from "@/components/modals/initial-modal";
+import { ProfileModal } from "@/components/modals/profile-modal";
 
 async function SetupPage() {
   const profile = await initialProfile();
+
+  if (profile?.name === "null null") {
+    return <ProfileModal />;
+  }
   const server = await db.server.findFirst({
     where: { members: { some: { profileId: profile?.id } } },
   });

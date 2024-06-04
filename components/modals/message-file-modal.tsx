@@ -12,7 +12,13 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormItem, FormField } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormItem,
+  FormField,
+} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "../file-upload";
 import axios from "axios";
@@ -82,6 +88,9 @@ export const MessageFile = () => {
                   />
                 </div>
               </div>
+              <FormDescription>
+                Click UPLOAD button to upload image
+              </FormDescription>
               <DialogFooter className="bg-gray-100 px-6 py-4">
                 <Button disabled={isLoading} variant="primary">
                   Send

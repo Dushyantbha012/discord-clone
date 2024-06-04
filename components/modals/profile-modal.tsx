@@ -22,18 +22,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 import { FileUpload } from "../file-upload";
 import axios from "axios";
-import { useModal } from "@/components/hooks/use-modal-store";
 
 const formSchema = z.object({
-  name: z.string().min(1, { message: "Server name is required" }),
-  imageUrl: z.string().min(1, { message: "Server image is required" }),
+  name: z.string().min(1, { message: " Name is required" }),
+  imageUrl: z.string().min(1, { message: " Image is required" }),
 });
 
-export const CreateServerModal = () => {
-  const { isOpen, onClose, type, onOpen } = useModal();
-  const isModalOpen = isOpen && type === "createServer";
+export const ProfileModal = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,36 +45,29 @@ export const CreateServerModal = () => {
       imageUrl: "",
     },
   });
-  if (isModalOpen) console.log("modal open");
   const router = useRouter();
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const res = await axios.post("/api/servers", values);
+      const res = axios.post("/api/profiles", values);
       form.reset();
       router.refresh();
-      onClose();
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
   };
-
-  const handelClose = () => {
-    form.reset();
-    onClose();
-  };
+  if (!isMounted) {
+    return null;
+  }
   return (
     <div>
-      <Dialog open={isModalOpen} onOpenChange={handelClose}>
+      <Dialog open>
         <DialogContent className="bg-white text-black p-0 overflow-hidden">
           <DialogHeader className="pt-8 px-6">
             <DialogTitle className="text-2xl text-center font-bold">
-              Customize your server
+              Customize your Profile
             </DialogTitle>
-            <DialogDescription>
-              Give your server a personality with a name and an image. [You can
-              always change it later]
-            </DialogDescription>
           </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -101,13 +98,13 @@ export const CreateServerModal = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                        Server Name
+                        Name
                       </FormLabel>
                       <FormControl>
                         <Input
                           disabled={isLoading}
                           className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                          placeholder="Enter Server Name"
+                          placeholder="Enter Name"
                           {...field}
                         />
                       </FormControl>
@@ -116,7 +113,7 @@ export const CreateServerModal = () => {
                   )}
                 />
               </div>
-              <DialogFooter className="bg-gray-100 px-6 py-4 flex items-center justify-center ">
+              <DialogFooter className="bg-gray-100 px-6 py-4">
                 <Button disabled={isLoading} variant="primary">
                   Create
                 </Button>
