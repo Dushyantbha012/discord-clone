@@ -67,7 +67,7 @@ export const MessageFile = () => {
   return (
     <div>
       <Dialog open={isModalOpen} onOpenChange={handelClose}>
-        <DialogContent className="bg-white text-black p-0 overflow-hidden">
+        <DialogContent className="bg-white dark:bg-zinc-600 dark:text-white text-black p-0 overflow-hidden">
           {internalIsLoading && (
             <>
               <div className="flex items-center justify-center align-middle h-[200px]">
@@ -109,9 +109,11 @@ export const MessageFile = () => {
                     </div>
                   </div>
                   <FormDescription>
-                    Click UPLOAD button to upload image
+                    <div className="w-full text-center">
+                      Click UPLOAD button to upload image
+                    </div>
                   </FormDescription>
-                  <DialogFooter className="bg-gray-100 px-6 py-4">
+                  <DialogFooter className="bg-gray-100 dark:bg-gray-600 px-6 py-4">
                     <Button disabled={isLoading} variant="primary">
                       Send
                     </Button>

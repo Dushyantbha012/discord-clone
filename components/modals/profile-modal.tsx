@@ -67,7 +67,7 @@ export const ProfileModal = ({ userId }: { userId: string }) => {
   return (
     <div>
       <Dialog open>
-        <DialogContent className="bg-white text-black p-0 overflow-hidden">
+        <DialogContent className="bg-white dark:bg-zinc-600 dark:text-white text-black p-0 overflow-hidden">
           {internalIsLoading && (
             <>
               <div className="flex items-center justify-center align-middle h-[200px]">
@@ -107,20 +107,22 @@ export const ProfileModal = ({ userId }: { userId: string }) => {
                       />
                     </div>
                     <FormDescription>
-                      Click UPLOAD button to upload image
+                      <div className="w-full text-center">
+                        Click UPLOAD button to upload image
+                      </div>
                     </FormDescription>
                     <FormField
                       control={form.control}
                       name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                          <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-white">
                             Full Name
                           </FormLabel>
                           <FormControl>
                             <Input
                               disabled={isLoading}
-                              className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                              className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0 placeholder:text-black/50"
                               placeholder="Enter Full Name"
                               {...field}
                             />
@@ -130,7 +132,7 @@ export const ProfileModal = ({ userId }: { userId: string }) => {
                       )}
                     />
                   </div>
-                  <DialogFooter className="bg-gray-100 px-6 py-4">
+                  <DialogFooter className="bg-gray-100 dark:bg-gray-600 px-6 py-4">
                     <Button disabled={isLoading} variant="primary">
                       Done
                     </Button>
