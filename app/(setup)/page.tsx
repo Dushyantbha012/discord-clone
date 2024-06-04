@@ -8,7 +8,7 @@ async function SetupPage() {
   const profile = await initialProfile();
 
   if (profile?.name === "null null") {
-    return <ProfileModal />;
+    return <ProfileModal userId={profile.userId} />;
   }
   const server = await db.server.findFirst({
     where: { members: { some: { profileId: profile?.id } } },
