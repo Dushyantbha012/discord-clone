@@ -26,7 +26,8 @@ import { FileUpload } from "../file-upload";
 import axios from "axios";
 import { useModal } from "@/components/hooks/use-modal-store";
 import { useEffect } from "react";
-
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
 const formSchema = z.object({
   name: z.string().min(1, { message: "Server name is required" }),
   imageUrl: z.string().min(1, { message: "Server image is required" }),
@@ -35,6 +36,8 @@ const formSchema = z.object({
 export const EditServerModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "editServer";
+  const [internalIsLoading, setInternalIsLoading] = useState(false);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,12 +58,16 @@ export const EditServerModal = () => {
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setInternalIsLoading(true);
+
       const res = await axios.patch(`/api/servers/${server?.id}`, values);
       form.reset();
       router.refresh();
       onClose();
     } catch (error) {
       console.log(error);
+    } finally {
+      setInternalIsLoading(false);
     }
   };
 
@@ -73,66 +80,81 @@ export const EditServerModal = () => {
     <div>
       <Dialog open={isModalOpen} onOpenChange={handelClose}>
         <DialogContent className="bg-white text-black p-0 overflow-hidden">
-          <DialogHeader className="pt-8 px-6">
-            <DialogTitle className="text-2xl text-center font-bold">
-              Customize your server
-            </DialogTitle>
-            <DialogDescription>
-              Give your server a personality with a name and an image. [You can
-              always change it later]
-            </DialogDescription>
-          </DialogHeader>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <div className="space-y-8 px-6">
-                <div className="flex items-center justify-center text-center">
-                  <FormField
-                    control={form.control}
-                    name="imageUrl"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <FileUpload
-                            endpoint="serverImage"
-                            value={field.value}
-                            onChange={field.onChange}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormDescription>
-                  Click UPLOAD button to upload image
-                </FormDescription>
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                        Server Name
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={isLoading}
-                          className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                          placeholder="Enter Server Name"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+          {internalIsLoading && (
+            <>
+              <div className="flex items-center justify-center align-middle h-[200px]">
+                <Loader2 className="h-6 w-6 animate-spin text-zinc-500 my-4" />
               </div>
-              <DialogFooter className="bg-gray-100 px-6 py-4 flex items-center justify-center ">
-                <Button disabled={isLoading} variant="primary">
-                  Update
-                </Button>
-              </DialogFooter>
-            </form>
-          </Form>
+            </>
+          )}
+
+          {!internalIsLoading && (
+            <>
+              <DialogHeader className="pt-8 px-6">
+                <DialogTitle className="text-2xl text-center font-bold">
+                  Customize your server
+                </DialogTitle>
+                <DialogDescription>
+                  Give your server a personality with a name and an image. [You
+                  can always change it later]
+                </DialogDescription>
+              </DialogHeader>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-8"
+                >
+                  <div className="space-y-8 px-6">
+                    <div className="flex items-center justify-center text-center">
+                      <FormField
+                        control={form.control}
+                        name="imageUrl"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <FileUpload
+                                endpoint="serverImage"
+                                value={field.value}
+                                onChange={field.onChange}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <FormDescription>
+                      Click UPLOAD button to upload image
+                    </FormDescription>
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                            Server Name
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              disabled={isLoading}
+                              className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                              placeholder="Enter Server Name"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <DialogFooter className="bg-gray-100 px-6 py-4 flex items-center justify-center ">
+                    <Button disabled={isLoading} variant="primary">
+                      Update
+                    </Button>
+                  </DialogFooter>
+                </form>
+              </Form>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </div>
